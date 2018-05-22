@@ -1,7 +1,7 @@
 package connectFour;
 
-import contestants.SimplePlayer;
 import contestants.SimplePlayer2;
+import contestants.SimplePlayer;
 import graphics.GamePanel;
 import sample.InteractivePlayer;
 
@@ -59,7 +59,7 @@ public class Runner
 
            ---------------------------------------------------------------------------------- */
         
-        playGame(new SimplePlayer2(), new InteractivePlayer());
+        playGame(new SimplePlayer(), new InteractivePlayer());
         //Made SimplePlayer and SimplePlayer2
 
         // This example plays bromanda.AIPlayerAlphaBeta and lets you see the

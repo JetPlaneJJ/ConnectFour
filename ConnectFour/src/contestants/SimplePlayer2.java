@@ -3,26 +3,28 @@ package contestants;
 import connectFour.Grid;
 import connectFour.Player;
 
-public class SimplePlayer2 implements Player
+/* 
+	----------------------------------------------------------------------------------
+	SIMPLE PLAYER
+
+	For step 3 of the ConnectFour doc, you will fill out this class to create
+	your first, simple player.  See doc for details.
+	----------------------------------------------------------------------------------
+*/
+
+public class SimplePlayer2 implements Player 
 {
 
 	@Override
-	public int getMoveColumn(Grid g)
+	public int getMoveColumn(Grid g) 
 	{
-		// TODO Auto-generated method stub
-		int colnumb = 0;
-		while (g.isColumnFull(colnumb) && colnumb <7)
-		{
-			colnumb++;
-		}
-		return colnumb;
+		return (int) (Math.random()*7);
 	}
 
 	@Override
-	public String getPlayerName()
+	public String getPlayerName() 
 	{
-		// TODO Auto-generated method stub
-		return "SimplePlayer2";
+		return "My Simple Player";
 	}
 
 }
