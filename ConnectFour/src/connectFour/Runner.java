@@ -1,5 +1,7 @@
 package connectFour;
 
+import contestants.SimplePlayer;
+import contestants.SimplePlayer2;
 import graphics.GamePanel;
 import sample.InteractivePlayer;
 
@@ -57,7 +59,8 @@ public class Runner
 
            ---------------------------------------------------------------------------------- */
         
-        playGame(new InteractivePlayer(), new InteractivePlayer());
+        playGame(new SimplePlayer2(), new InteractivePlayer());
+        //Made SimplePlayer and SimplePlayer2
 
         // This example plays bromanda.AIPlayerAlphaBeta and lets you see the
         // hypothetical game plays it makes during look-ahead

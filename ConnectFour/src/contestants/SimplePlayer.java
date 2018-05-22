@@ -18,7 +18,7 @@ public class SimplePlayer implements Player
 	@Override
 	public int getMoveColumn(Grid g) 
 	{
-		return 0;
+		return (int) (Math.random()*7);
 	}
 
 	@Override
