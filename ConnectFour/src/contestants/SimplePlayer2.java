@@ -18,6 +18,11 @@ public class SimplePlayer2 implements Player
 	@Override
 	public int getMoveColumn(Grid g) 
 	{
+		int a = (int) (Math.random()*7);
+		while (g.isColumnFull(a) && a <7)
+		{
+			a = (int) (Math.random()*7);
+		}
 		return (int) (Math.random()*7);
 	}
 

@@ -1,6 +1,7 @@
 package connectFour;
 
 import contestants.SimplePlayer2;
+import contestants.JLinMiniMax;
 import contestants.SimplePlayer;
 import graphics.GamePanel;
 import sample.InteractivePlayer;
@@ -59,7 +60,7 @@ public class Runner
 
            ---------------------------------------------------------------------------------- */
         
-        playGame(new SimplePlayer(), new InteractivePlayer());
+        playGame(new SimplePlayer2(), new JLinMiniMax());
         //Made SimplePlayer and SimplePlayer2
 
         // This example plays bromanda.AIPlayerAlphaBeta and lets you see the

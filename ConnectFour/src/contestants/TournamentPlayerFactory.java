@@ -16,8 +16,7 @@ public class TournamentPlayerFactory
 		This method need not be more than a single line of code.  See doc for details.
 		----------------------------------------------------------------------------------
 		 */
-		JTourn j = new JTourn();
-		
-		return j;
+		return new JLinMiniMax();
 	}
+	
 }
