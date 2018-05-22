@@ -1,6 +1,7 @@
 package contestants;
 
 import connectFour.Grid;
+import connectFour.GridUtilities;
 
 public class JLinMiniMax implements connectFour.Player
 {
@@ -45,8 +46,33 @@ public class JLinMiniMax implements connectFour.Player
 	
 	public int getHeuristicScore(Grid g)
 	{
+		int result = 0;
+		GridUtilities gu = new GridUtilities(g);
+		for (int x = 0; x < g.getRows(); x++)
+		{
+			for (int y = 0; y < g.getCols(); y++)
+			{
+				if (gu.doesVertical4StartHere(x, y))
+				{
+					result = x;
+				}
+				if (gu.doesHorizontal4StartHere(x, y))
+				{
+					result = x;
+				}
+				if (gu.doesDiagonalRight4StartHere(x, y))
+				{
+					result = x;
+				}
+				if (gu.doesDiagonalLeft4StartHere(x, y))
+				{
+					result = x;
+				}
+				
+			}
+		}
 		
-		return 0;
+		return result;
 	}
 
 	//Mr George's MiniMax
@@ -80,8 +106,7 @@ public class JLinMiniMax implements connectFour.Player
             // THE SCORE SHOULD BE FROM THE POINT OF VIEW OF YOUR PLAYER
             // (HIGH VALUES MEANS GOOD FOR YOU, LOW VALUES MEAN BAD FOR YOU).
             // THEN REPLACE '= 1' WITH '= getHeuristicScore(g)'
-            int score = 1; 
-            getHeuristicScore(g);
+            int score = getHeuristicScore(g);
             return new int[] { score, -1 };
         }
 
