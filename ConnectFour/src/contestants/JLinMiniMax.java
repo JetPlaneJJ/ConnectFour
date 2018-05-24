@@ -15,13 +15,12 @@ public class JLinMiniMax implements connectFour.Player
 	@Override
 	public int getMoveColumn(Grid g)
 	{
-		int playernum = g.getNextPlayer();
-		int colnumb = 0;
+		int colnumb = 3;
 		while (g.isColumnFull(colnumb) && colnumb <7)
 		{
 			colnumb++;
 		}
-		int[] a = minimaxGetScore(g, 6, playernum);
+		int[] a = minimaxGetScore(g, 6, g.getNextPlayer());
 		
 		int min = Integer.MIN_VALUE;
 		for (int x = 0; x < a.length; x++)
@@ -46,33 +45,49 @@ public class JLinMiniMax implements connectFour.Player
 	
 	public int getHeuristicScore(Grid g)
 	{
-		int result = 0;
-		GridUtilities gu = new GridUtilities(g);
-		for (int x = 0; x < g.getRows(); x++)
+		int score = 1; int min = 0;
+		int[] dir = {Grid.RIGHT, -1*Grid.RIGHT, Grid.UP, Grid.UPLEFT, Grid.UPRIGHT};
+		int checkifMe = 1; //get number id of player positive if me, negative if opp
+		if (g.getNextPlayer() == 2)
 		{
-			for (int y = 0; y < g.getCols(); y++)
+			checkifMe*=-1;
+		}
+		GridUtilities gu = new GridUtilities(g);
+		
+		for (int x = 0; x < g.getRows(); x++) //for every row, check
+		{
+			for (int y = 0; y < g.getCols(); y++) //for every col, check
 			{
-				if (gu.doesVertical4StartHere(x, y))
+				for (int z = 0; z < dir.length; z++) //each direction
 				{
-					result = x;
-				}
-				if (gu.doesHorizontal4StartHere(x, y))
-				{
-					result = x;
-				}
-				if (gu.doesDiagonalRight4StartHere(x, y))
-				{
-					result = x;
-				}
-				if (gu.doesDiagonalLeft4StartHere(x, y))
-				{
-					result = x;
-				}
-				
-			}
+					int[] lenspaces = gu.getLengthAndSpaces(x, y, z); //check left, right, up... etc
+						/*  4 elements as follows: [0] = length of chain found [1] = number of spaces surrounding the chain
+						 *  (either 0, 1, or 2) ([2], [3]) = the row and column of one of the spaces surrounding the chain. 
+						 *  If no spaces surround the chain, these are just (-1, -1)
+						 */
+					if (lenspaces[2] > -1) //if the chain exists
+					{
+						if (lenspaces[0] >= 1) //length of chain might be 1,2,3,4
+						{
+							if (lenspaces[0] >= 3 && lenspaces[1] > 1) //best possible situation:  3 or more empty spaces and some space around the chain
+							{
+								score*=3000;
+							}
+							else if (lenspaces[0] < 3 && lenspaces[1] > 1)
+							{
+								score*=2000;
+							}
+							else
+							{
+								score*=1000;
+							}
+						}
+					}
+				}	
+			}	
 		}
 		
-		return result;
+		return checkifMe*score;
 	}
 
 	//Mr George's MiniMax
@@ -111,7 +126,7 @@ public class JLinMiniMax implements connectFour.Player
         }
 
         // Call self recursively for next player's moves' scores
-        
+        minimaxGetScore(g, remainingDepth, myPlayer);
         // Is this nextPlayer trying to minimize or maximize the score?  If it's us,
         // maximize.  If opponent, minimize.
         boolean isMax = (nextPlayer == myPlayer);
