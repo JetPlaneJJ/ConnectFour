@@ -5,55 +5,57 @@ import connectFour.GridUtilities;
 
 public class JLinMiniMax implements connectFour.Player
 {
-
-	// It must have a public constructor that takes no parameters
+	private boolean t = true;
 	public JLinMiniMax()
 	{
-		
 	}
 	
 	@Override
 	public int getMoveColumn(Grid g)
 	{
-		int colnumb = 3;
-		while (g.isColumnFull(colnumb) && colnumb <7)
+		int colnumb = 0;
+		if (t)
+		{
+			colnumb =3; 
+			t= false;
+			return colnumb;
+		}
+		int[] a = minimaxGetScore(g, 5, g.getNextPlayer());
+		
+		int max = Integer.MIN_VALUE;
+		for (int x = 0; x < a.length; x++)
+		{
+			if (a[x] > max)
+			{
+				colnumb = x;
+				max = a[x];
+			}
+		}
+		while ((g.isColumnFull(colnumb) && colnumb <7))
 		{
 			colnumb++;
 		}
-		int[] a = minimaxGetScore(g, 6, g.getNextPlayer());
-		
-		int min = Integer.MIN_VALUE;
-		for (int x = 0; x < a.length; x++)
-		{
-			if (a[x] > min)
-			{
-				colnumb = x;
-				min = a[x];
-			}
-		}
-		
 		return colnumb;
 	}
 
 	@Override
 	public String getPlayerName()
 	{
-		// TODO Auto-generated method stub
 		return "J";
 	}
 
 	
 	public int getHeuristicScore(Grid g)
 	{
-		int score = 1; int min = 0;
-		int[] dir = {Grid.RIGHT, -1*Grid.RIGHT, Grid.UP, Grid.UPLEFT, Grid.UPRIGHT};
+		int score = 1; 
+		int[] dir = {Grid.RIGHT, Grid.UP, Grid.UPLEFT, Grid.UPRIGHT};
 		int checkifMe = 1; //get number id of player positive if me, negative if opp
 		if (g.getNextPlayer() == 2)
 		{
 			checkifMe*=-1;
 		}
 		GridUtilities gu = new GridUtilities(g);
-		
+		int maximum = Integer.MAX_VALUE;
 		for (int x = 0; x < g.getRows(); x++) //for every row, check
 		{
 			for (int y = 0; y < g.getCols(); y++) //for every col, check
@@ -69,21 +71,30 @@ public class JLinMiniMax implements connectFour.Player
 					{
 						if (lenspaces[0] >= 1) //length of chain might be 1,2,3,4
 						{
-							if (lenspaces[0] >= 3 && lenspaces[1] > 1) //best possible situation:  3 or more empty spaces and some space around the chain
-							{
-								score*=3000;
-							}
-							else if (lenspaces[0] < 3 && lenspaces[1] > 1)
+							if (lenspaces[0] >= 3) // 3 or more empty spaces
 							{
 								score*=2000;
 							}
-							else
+							else //less than 3 spaces 
 							{
-								score*=1000;
+								score*=5500;
 							}
 						}
+						else
+						{
+							score*=500;
+							
+						}
 					}
-				}	
+					else
+					{
+						score*=500;
+						if (score < maximum)
+						{
+							
+						}
+					}
+				}
 			}	
 		}
 		
@@ -126,7 +137,7 @@ public class JLinMiniMax implements connectFour.Player
         }
 
         // Call self recursively for next player's moves' scores
-        minimaxGetScore(g, remainingDepth, myPlayer);
+        minimaxGetScore(g, remainingDepth-1, g.getNextPlayer());
         // Is this nextPlayer trying to minimize or maximize the score?  If it's us,
         // maximize.  If opponent, minimize.
         boolean isMax = (nextPlayer == myPlayer);

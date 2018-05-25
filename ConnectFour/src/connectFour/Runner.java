@@ -60,7 +60,7 @@ public class Runner
 
            ---------------------------------------------------------------------------------- */
         
-        playGame(new SimplePlayer2(), new JLinMiniMax());
+        playGame(new bromanda.AIPlayerAlphaBeta(), new JLinMiniMax());
         //Made SimplePlayer and SimplePlayer2
 
         // This example plays bromanda.AIPlayerAlphaBeta and lets you see the
