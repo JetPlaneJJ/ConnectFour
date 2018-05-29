@@ -16,26 +16,21 @@ public class JLinMiniMax implements connectFour.Player
 		int colnumb = 0;
 		if (t)
 		{
-			colnumb =3; 
+			colnumb = 3; 
 			t= false;
 			return colnumb;
 		}
-		int[] a = minimaxGetScore(g, 5, g.getNextPlayer());
-		
-		int max = Integer.MIN_VALUE;
-		for (int x = 0; x < a.length; x++)
+		int[] a = minimaxGetScore(g, 6, g.getNextPlayer());
+		int r = a[1];
+		while (g.isColumnFull(a[1]) && a[1] <= 6)
 		{
-			if (a[x] > max)
-			{
-				colnumb = x;
-				max = a[x];
-			}
+			r++;
 		}
-		while ((g.isColumnFull(colnumb) && colnumb <7))
+		while (g.isColumnFull(a[1]) && a[1] >= 0)
 		{
-			colnumb++;
+			r--;
 		}
-		return colnumb;
+		return a[1];
 	}
 
 	@Override
@@ -49,13 +44,7 @@ public class JLinMiniMax implements connectFour.Player
 	{
 		int score = 1; 
 		int[] dir = {Grid.RIGHT, Grid.UP, Grid.UPLEFT, Grid.UPRIGHT};
-		int checkifMe = 1; //get number id of player positive if me, negative if opp
-		if (g.getNextPlayer() == 2)
-		{
-			checkifMe*=-1;
-		}
 		GridUtilities gu = new GridUtilities(g);
-		int maximum = Integer.MAX_VALUE;
 		for (int x = 0; x < g.getRows(); x++) //for every row, check
 		{
 			for (int y = 0; y < g.getCols(); y++) //for every col, check
@@ -73,32 +62,35 @@ public class JLinMiniMax implements connectFour.Player
 						{
 							if (lenspaces[0] >= 3) // 3 or more empty spaces
 							{
-								score*=2000;
+								if (lenspaces[3] > 2 || lenspaces[3] < 5)
+								{
+									score *=2;
+								}
+								score*=50;
 							}
 							else //less than 3 spaces 
 							{
-								score*=5500;
+								if (lenspaces[3] > 1 || lenspaces[3] < 6)
+								{
+									score *=2;
+								}
+								score*=40;
 							}
 						}
 						else
 						{
-							score*=500;
-							
+							score*=10;
 						}
 					}
 					else
 					{
-						score*=500;
-						if (score < maximum)
-						{
-							
-						}
+						score*=1;
 					}
 				}
 			}	
 		}
 		
-		return checkifMe*score;
+		return score;
 	}
 
 	//Mr George's MiniMax
