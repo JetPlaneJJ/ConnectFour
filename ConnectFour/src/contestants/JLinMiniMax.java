@@ -16,7 +16,7 @@ public class JLinMiniMax implements connectFour.Player
 		int colnumb = 0;
 		if (t)
 		{
-			colnumb = 3; 
+			colnumb = g.getCols()/2; 
 			t= false;
 			return colnumb;
 		}
@@ -72,7 +72,7 @@ public class JLinMiniMax implements connectFour.Player
 								{
 									score *=2;
 								}
-								score*=4;
+								score*=10;
 							}
 						}
 					}
