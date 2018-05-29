@@ -9,7 +9,6 @@ public class JLinMiniMax implements connectFour.Player
 	public JLinMiniMax()
 	{
 	}
-	
 	@Override
 	public int getMoveColumn(Grid g)
 	{
@@ -32,7 +31,6 @@ public class JLinMiniMax implements connectFour.Player
 		}
 		return r;
 	}
-
 	@Override
 	public String getPlayerName()
 	{
@@ -64,11 +62,11 @@ public class JLinMiniMax implements connectFour.Player
 								{
 									score *=2;
 								}
-								score*=5;
+								score*=50;
 							}
 							else //less than 3 spaces 
 							{
-								if (lenspaces[3] > 1 || lenspaces[3] < 6)
+								if (lenspaces[3] > 0 || lenspaces[3] < 6)
 								{
 									score *=2;
 								}
@@ -82,8 +80,6 @@ public class JLinMiniMax implements connectFour.Player
 		
 		return score;
 	}
-
-	//Mr George's MiniMax
 	private int[] minimaxGetScore(Grid g, int remainingDepth, int myPlayer)
     {
         // Did this move end the game?  If so, score it now based on whether we won.
@@ -109,15 +105,9 @@ public class JLinMiniMax implements connectFour.Player
         // for this board
         if (remainingDepth <= 0)
         {
-            // TODO: FOR YOU TO DO!  WRITE THIS getHeuristicScore METHOD
-            // TO EXAMINE THE GRID AND COME UP WITH A NUMERIC SCORE FOR IT.
-            // THE SCORE SHOULD BE FROM THE POINT OF VIEW OF YOUR PLAYER
-            // (HIGH VALUES MEANS GOOD FOR YOU, LOW VALUES MEAN BAD FOR YOU).
-            // THEN REPLACE '= 1' WITH '= getHeuristicScore(g)'
             int score = getHeuristicScore(g);
             return new int[] { score, -1 };
         }
-
         // Call self recursively for next player's moves' scores
         minimaxGetScore(g, remainingDepth-1, g.getNextPlayer());
         // Is this nextPlayer trying to minimize or maximize the score?  If it's us,
