@@ -22,15 +22,15 @@ public class JLinMiniMax implements connectFour.Player
 		}
 		int[] a = minimaxGetScore(g, 6, g.getNextPlayer());
 		int r = a[1];
-		while (g.isColumnFull(a[1]) && a[1] <= 6)
+		while (g.isColumnFull(a[1]) && a[1] < g.getCols())
 		{
 			r++;
 		}
-		while (g.isColumnFull(a[1]) && a[1] >= 0)
+		while (g.isColumnFull(a[1]) && a[1] > g.getCols())
 		{
 			r--;
 		}
-		return a[1];
+		return r;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class JLinMiniMax implements connectFour.Player
 								{
 									score *=2;
 								}
-								score*=50;
+								score*=5;
 							}
 							else //less than 3 spaces 
 							{
@@ -74,17 +74,9 @@ public class JLinMiniMax implements connectFour.Player
 								{
 									score *=2;
 								}
-								score*=40;
+								score*=4;
 							}
 						}
-						else
-						{
-							score*=10;
-						}
-					}
-					else
-					{
-						score*=1;
 					}
 				}
 			}	
