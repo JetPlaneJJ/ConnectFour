@@ -22,11 +22,11 @@ public class JLinMiniMax implements connectFour.Player
 		}
 		int[] a = minimaxGetScore(g, 6, g.getNextPlayer());
 		int r = a[1];
-		while (g.isColumnFull(a[1]) && a[1] < g.getCols())
+		while (g.isColumnFull(a[1]) && a[1] < g.getCols()-1)
 		{
 			r++;
 		}
-		while (g.isColumnFull(a[1]) && a[1] > g.getCols())
+		while (g.isColumnFull(a[1]) && a[1] > 0)
 		{
 			r--;
 		}
@@ -38,8 +38,6 @@ public class JLinMiniMax implements connectFour.Player
 	{
 		return "J";
 	}
-
-	
 	public int getHeuristicScore(Grid g)
 	{
 		int score = 1; 
